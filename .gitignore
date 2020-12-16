@@ -28,3 +28,7 @@ hs_err_pid*
 /Instruction.png
 /out.log
 /out.log.*
+/.idea/
+/.idea/out/
+/lib/
+
