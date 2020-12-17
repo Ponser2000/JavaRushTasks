@@ -14,8 +14,9 @@ import java.util.List;
 
 public class ConsoleHelper {
   private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-  private static String GREATING_MSG = "Please, make your choice";
-  private static String WARNING_MSG = "Unfortunately, there is no such dish on the menu.";
+  private static String GREATING_MSG = "Please choose a dish from the list:";
+  private static String WARNING_MSG = " hasn't been detected";
+  private static String SUCCEED_MSG = " has been successfully added to your order";
 
   public static void writeMessage(String message) {
     System.out.println(message);
@@ -29,17 +30,19 @@ public class ConsoleHelper {
     writeMessage(Dish.allDishesToString());
     writeMessage(GREATING_MSG);
 
-    List<Dish> result = new ArrayList<>();
+    List<Dish> dishes = new ArrayList<>();
 
-    String wishes = null;
-    while (!(wishes = readString()).equals("exit")) {
+    String dishName = null;
+    while (!(dishName = readString()).trim().equals("exit")) {
       try {
-        result.add(Dish.valueOf(wishes));
+        Dish dish = Dish.valueOf(dishName);
+        dishes.add(dish);
+        writeMessage(dishName + SUCCEED_MSG);
       } catch (IllegalArgumentException | NullPointerException e) {
-        writeMessage(WARNING_MSG);
+        writeMessage(dishName + WARNING_MSG);
       }
     }
-    return result;
+    return dishes;
   }
 
 }
