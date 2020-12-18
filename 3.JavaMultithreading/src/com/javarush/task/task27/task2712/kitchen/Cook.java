@@ -9,7 +9,7 @@ import java.util.Observer;
  * @project JavaRushTasks/com.javarush.task.task27.task2712.kitchen
  */
 
-public class Cook implements Observer {
+public class Cook  extends Observable implements Observer {
   private final String name;
 
   public Cook(String name) {
@@ -24,5 +24,7 @@ public class Cook implements Observer {
   @Override
   public void update(Observable o, Object order) {
     ConsoleHelper.writeMessage("Start cooking - " + order);
+    setChanged();
+    notifyObservers(order);
   }
 }
