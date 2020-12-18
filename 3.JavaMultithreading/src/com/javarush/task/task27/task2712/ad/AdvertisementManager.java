@@ -5,5 +5,10 @@ package com.javarush.task.task27.task2712.ad;
  * @project JavaRushTasks/com.javarush.task.task27.task2712.ad
  */
 public class AdvertisementManager {
+  private final AdvertisementStorage storage;
+
+  public AdvertisementManager() {
+    storage = AdvertisementStorage.getInstance();
+  }
 
 }
