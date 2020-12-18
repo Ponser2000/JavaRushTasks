@@ -1,5 +1,6 @@
 package com.javarush.task.task27.task2712;
 
+import com.javarush.task.task27.task2712.ad.AdvertisementManager;
 import com.javarush.task.task27.task2712.kitchen.Order;
 import java.io.IOException;
 import java.util.Observable;
@@ -28,6 +29,8 @@ public class Tablet extends Observable {
       if (order.isEmpty()) {
         return null;
       }
+      AdvertisementManager manager = new AdvertisementManager(order.getTotalCookingTime() * 60);
+      manager.processVideos();
       setChanged();
       notifyObservers(order);
     } catch (IOException e) {
