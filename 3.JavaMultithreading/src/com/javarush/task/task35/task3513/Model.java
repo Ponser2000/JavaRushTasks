@@ -127,5 +127,86 @@ public class Model {
     isSaveNeeded = false;
   }
 
+  public void down(){
+    saveState(gameTiles);
+    isSaveNeeded = false;
+    Tile[][] downArray = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        downArray[j][FIELD_WIDTH - i - 1] = gameTiles[i][j];
+      }
+    }
+    boolean isChanged = false;
+    for (int i = 0; i < FIELD_WIDTH; i++) {
+      if (compressTiles(downArray[i]) | mergeTiles(downArray[i])) {
+        isChanged = true;
+      }
+    }
+    if (isChanged) {
+      addTile();
+    }
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        gameTiles[i][j] = downArray[j][FIELD_WIDTH - i - 1];
+      }
+    }
+
+    isSaveNeeded = true;
+  }
+
+  public void up(){
+    saveState(gameTiles);
+    isSaveNeeded = false;
+    Tile[][] upArray = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        upArray[i][j] = gameTiles[j][FIELD_WIDTH - i - 1];
+      }
+    }
+    boolean isChanged = false;
+    for (int i = 0; i < FIELD_WIDTH; i++) {
+      if (compressTiles(upArray[i]) | mergeTiles(upArray[i])) {
+        isChanged = true;
+      }
+    }
+    if (isChanged) {
+      addTile();
+    }
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        gameTiles[j][FIELD_WIDTH - i - 1] = upArray[i][j];
+      }
+    }
+
+    isSaveNeeded = true;
+  }
+
+  public void right(){
+    saveState(gameTiles);
+    isSaveNeeded = false;
+    Tile[][] rightArray = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        rightArray[i][j] = gameTiles[FIELD_WIDTH - i - 1][FIELD_WIDTH - j - 1];
+      }
+    }
+    boolean isChanged = false;
+    for (int i = 0; i < FIELD_WIDTH; i++) {
+      if (compressTiles(rightArray[i]) | mergeTiles(rightArray[i])) {
+        isChanged = true;
+      }
+    }
+    if (isChanged) {
+      addTile();
+    }
+    for(int i = 0; i < gameTiles.length; i++) {
+      for(int j = 0; j < gameTiles[i].length; j++) {
+        gameTiles[i][j] = rightArray[FIELD_WIDTH - i - 1][FIELD_WIDTH - j - 1];
+      }
+    }
+
+    isSaveNeeded = true;
+  }
+
 
 }
