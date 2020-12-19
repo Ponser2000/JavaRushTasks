@@ -208,5 +208,23 @@ public class Model {
     isSaveNeeded = true;
   }
 
+  public Tile[][] getGameTiles() {
+    return gameTiles;
+  }
+
+  public boolean canMove(){
+    if(getEmptyTiles().size() > 0){
+      return true;
+    }
+    for(int i = 0; i < FIELD_WIDTH; i++) {
+      for (int j = 0; j < FIELD_WIDTH; j++) {
+        if((j+1) < FIELD_WIDTH && gameTiles[i][j].value == gameTiles[i][j+1].value) return true;
+        else if((i+1) < FIELD_WIDTH && gameTiles[i][j].value == gameTiles[i+1][j].value) return true;
+
+      }
+    }
+    return false;
+  }
+
 
 }
