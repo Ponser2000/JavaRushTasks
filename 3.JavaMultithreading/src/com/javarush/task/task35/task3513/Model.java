@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -17,6 +18,9 @@ public class Model {
   private Tile[][] gameTiles;
   protected int maxTile;
   protected int score = 0;
+  private boolean isSaveNeeded = true;
+  private Stack<Tile[][]> previousStates = new Stack<>();
+  private Stack<Integer> previousScores = new Stack<>();
 
 
   public Model() {
@@ -94,5 +98,34 @@ public class Model {
     });
     return marker.get();
   }
+
+  public void left(){
+    saveState(gameTiles);
+    isSaveNeeded = false;
+    boolean isChanged = false;
+    for (int i = 0; i < FIELD_WIDTH; i++) {
+      if (compressTiles(gameTiles[i]) | mergeTiles(gameTiles[i])) {
+        isChanged = true;
+      }
+    }
+    if (isChanged) {
+      addTile();
+    }
+    isSaveNeeded = true;
+
+  }
+
+  private void saveState(Tile [][] tiles){
+    Tile [][] savedTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < FIELD_WIDTH; i++) {
+      for (int j = 0; j < FIELD_WIDTH; j++) {
+        savedTiles[i][j] = new Tile(gameTiles[i][j].value);
+      }
+    }
+    previousStates.push(savedTiles);
+    previousScores.push(new Integer(score));
+    isSaveNeeded = false;
+  }
+
 
 }
