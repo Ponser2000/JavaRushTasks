@@ -13,67 +13,77 @@ import java.util.List;
  * @project JavaRushTasks/com.javarush.task.task27.task2712.ad
  */
 public class AdvertisementManager {
-  private final AdvertisementStorage storage;
+  private final AdvertisementStorage storage = AdvertisementStorage.getInstance();
   private int timeSeconds;
-  private ArrayList<List<Advertisement>> bigList = new ArrayList<List<Advertisement>>();
 
   public AdvertisementManager(int timeSeconds) {
-    storage = AdvertisementStorage.getInstance();
     this.timeSeconds = timeSeconds;
   }
 
-  public void processVideos() throws NoVideoAvailableException{
-    if (storage.list().isEmpty()) {
+  public void processVideos() {
+    this.totalTimeSecondsLeft = Integer.MAX_VALUE;
+    obtainOptimalVideoSet(new ArrayList<>(), timeSeconds, 0L);
+
+    displayAdvertisement();
+  }
+
+  //recursion
+  private long maxAmount;
+  private List<Advertisement> optimalVideoSet;
+  private int totalTimeSecondsLeft;
+
+  private void obtainOptimalVideoSet(List<Advertisement> totalList, int currentTimeSecondsLeft, long currentAmount) {
+    if (currentTimeSecondsLeft < 0) {
+      return;
+    } else if (currentAmount > maxAmount
+        || currentAmount == maxAmount && (totalTimeSecondsLeft > currentTimeSecondsLeft
+        || totalTimeSecondsLeft == currentTimeSecondsLeft && totalList.size() < optimalVideoSet.size())) {
+      this.totalTimeSecondsLeft = currentTimeSecondsLeft;
+      this.optimalVideoSet = totalList;
+      this.maxAmount = currentAmount;
+      if (currentTimeSecondsLeft == 0) {
+        return;
+      }
+    }
+
+    ArrayList<Advertisement> tmp = getActualAdvertisements();
+    tmp.removeAll(totalList);
+    for (Advertisement ad : tmp) {
+      if (!ad.isActive()) continue;
+      ArrayList<Advertisement> currentList = new ArrayList<>(totalList);
+      currentList.add(ad);
+      obtainOptimalVideoSet(currentList, currentTimeSecondsLeft - ad.getDuration(), currentAmount + ad.getAmountPerOneDisplaying());
+    }
+  }
+
+  private ArrayList<Advertisement> getActualAdvertisements() {
+    ArrayList<Advertisement> advertisements = new ArrayList<>();
+    for (Advertisement ad : storage.list()) {
+      if (ad.isActive()) {
+        advertisements.add(ad);
+      }
+    }
+    return advertisements;
+  }
+
+  private void displayAdvertisement() {
+    if (optimalVideoSet == null || optimalVideoSet.isEmpty()) {
       throw new NoVideoAvailableException();
     }
 
-  }
+    optimalVideoSet.sort((o1, o2) -> {
+      long l = o2.getAmountPerOneDisplaying() - o1.getAmountPerOneDisplaying();
+      return (int) (l != 0 ? l : o2.getDuration() - o1.getDuration());
+    });
 
-  private void permutate(ArrayList<Advertisement> list)
-  {
-    // Очищаем статический массив комбинаций
-    bigList = new ArrayList<List<Advertisement>>();
-    for (int i = 1; i < (int)(Math.pow(2,list.size())); i++)
-    {
-      // Текущая выборка
-      List<Advertisement> curList = new ArrayList<>();
-
-      // Строка - битовое поле, задающее номера элементов в списке элементов для текущей выборки
-      // Для удобства переворачиваем ее
-      String binaryField = Integer.toBinaryString(i).toString();
-      while(binaryField.length() < list.size())
-        binaryField = "0" + binaryField;
-      binaryField = new StringBuffer(binaryField).reverse().toString();
-      // Проходим строку от начала до конца
-      // Индекс '1' - индикатор добавления элемента list.get(j) в тек. выборку
-      for (int j = 0; j < binaryField.length(); j++)
-      {
-        if(binaryField.charAt(j) == '1')
-        {
-          // Добавляем текущий элемент в тек. выборку
-          curList.add(list.get(j));
-        }
-      }
-      // Тек. выборку собрали , перед добавлением в общий список проверим ,
-      // не привышает ли она длительность заказа. Если превышает, то она нам не нужна
-      if(getDurationOfList(curList) <= timeSeconds)
-        bigList.add(curList);
+    for (Advertisement ad : optimalVideoSet) {
+      displayInPlayer(ad);
+      ad.revalidate();
     }
   }
 
-  private static long getAmountOfList(List<Advertisement> list)
-  {
-    long res = 0;
-    for(Advertisement a : list)
-      res += a.getAmountPerOneDisplaying();
-    return res;
-  }
-
-  private static int getDurationOfList(List<Advertisement> list)
-  {
-    int res = 0;
-    for(Advertisement a : list)
-      res += a.getDuration();
-    return res;
+  private void displayInPlayer(Advertisement advertisement) {
+    System.out.println(advertisement.getName() + " is displaying... " + advertisement.getAmountPerOneDisplaying() +
+        ", " + (1000 * advertisement.getAmountPerOneDisplaying() / advertisement.getDuration()));
   }
 }
