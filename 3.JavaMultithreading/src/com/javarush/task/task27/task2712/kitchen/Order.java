@@ -12,13 +12,17 @@ import java.util.List;
 
 public class Order {
 
-  private final Tablet tablet;
+  public final Tablet tablet;
   protected List<Dish> dishes;
 
   public Order(Tablet tablet) throws IOException {
     this.tablet = tablet;
     this.dishes = ConsoleHelper.getAllDishesForOrder();
     ConsoleHelper.writeMessage(toString());
+  }
+
+  public List<Dish> getDishes() {
+    return dishes;
   }
 
   @Override
