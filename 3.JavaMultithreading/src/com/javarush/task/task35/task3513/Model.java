@@ -2,8 +2,10 @@ package com.javarush.task.task35.task3513;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -12,16 +14,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @project JavaRushTasks/com.javarush.task.task35.task3513
  */
 public class Model {
-
   private static final int FIELD_WIDTH = 4;
-
-  private Tile[][] gameTiles;
-  protected int maxTile;
+  private Tile [][] gameTiles;
   protected int score = 0;
-  private boolean isSaveNeeded = true;
+  protected int maxTile;
   private Stack<Tile[][]> previousStates = new Stack<>();
   private Stack<Integer> previousScores = new Stack<>();
-
+  private boolean isSaveNeeded = true;
 
   public Model() {
     resetGameTiles();
@@ -37,6 +36,26 @@ public class Model {
     return tileList;
   }
 
+  private void saveState(Tile [][] tiles){
+    Tile [][] savedTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < FIELD_WIDTH; i++) {
+      for (int j = 0; j < FIELD_WIDTH; j++) {
+        savedTiles[i][j] = new Tile(gameTiles[i][j].value);
+      }
+    }
+    previousStates.push(savedTiles);
+    previousScores.push(new Integer(score));
+    isSaveNeeded = false;
+  }
+
+  public void rollback(){
+    if(!previousStates.empty() && !previousScores.empty()) {
+      gameTiles = previousStates.pop();
+      score = previousScores.pop();
+    }
+
+  }
+
   private void addTile(){
     List<Tile> tileList = getEmptyTiles();
     if(tileList.size() > 0){
@@ -46,58 +65,7 @@ public class Model {
     }
   }
 
-  protected   void resetGameTiles(){
-    gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
-    for(int i = 0; i < FIELD_WIDTH; i++){
-      for(int j = 0; j < FIELD_WIDTH; j++){
-        gameTiles[i][j] = new Tile();
-      }
-    }
-    maxTile = 0;
-    addTile();
-    addTile();
-  }
 
-  private boolean compressTiles(Tile[] tiles){
-    AtomicBoolean marker = new AtomicBoolean();
-    Arrays.sort(tiles, new Comparator<Tile>() {
-      @Override
-      public int compare(Tile o1, Tile o2) {
-        if(o1.value == 0 & o2.value == 0){
-          return 0;
-        }
-        else if(o1.value == 0 | o2.value == 0){
-          int result = o2.value - o1.value;
-          if(result < 0) marker.set(true);
-          return result;
-        }
-        else return 0;
-      }
-    });
-
-    return marker.get();
-  }
-
-  private boolean mergeTiles(Tile[] tiles){
-    AtomicBoolean marker = new AtomicBoolean();
-    compressTiles(tiles);
-    Arrays.sort(tiles, new Comparator<Tile>() {
-      @Override
-      public int compare(Tile o1, Tile o2) {
-        if (o1.value == o2.value & o1.value != 0) {
-          o1.value *= 2;
-          o2.value = 0;
-          compressTiles(tiles);
-          score += o1.value;
-          if (maxTile < o1.value) maxTile = o1.value;
-          marker.set(true);
-          return 0;
-        }
-        else return 0;
-      }
-    });
-    return marker.get();
-  }
 
   public void left(){
     saveState(gameTiles);
@@ -113,18 +81,6 @@ public class Model {
     }
     isSaveNeeded = true;
 
-  }
-
-  private void saveState(Tile [][] tiles){
-    Tile [][] savedTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
-    for(int i = 0; i < FIELD_WIDTH; i++) {
-      for (int j = 0; j < FIELD_WIDTH; j++) {
-        savedTiles[i][j] = new Tile(gameTiles[i][j].value);
-      }
-    }
-    previousStates.push(savedTiles);
-    previousScores.push(new Integer(score));
-    isSaveNeeded = false;
   }
 
   public void down(){
@@ -208,6 +164,60 @@ public class Model {
     isSaveNeeded = true;
   }
 
+  protected   void resetGameTiles(){
+    gameTiles = new Tile[FIELD_WIDTH][FIELD_WIDTH];
+    for(int i = 0; i < FIELD_WIDTH; i++){
+      for(int j = 0; j < FIELD_WIDTH; j++){
+        gameTiles[i][j] = new Tile();
+      }
+    }
+    maxTile = 0;
+    addTile();
+    addTile();
+
+  }
+
+  private boolean compressTiles(Tile[] tiles){
+    AtomicBoolean marker = new AtomicBoolean();
+    Arrays.sort(tiles, new Comparator<Tile>() {
+      @Override
+      public int compare(Tile o1, Tile o2) {
+        if(o1.value == 0 & o2.value == 0){
+          return 0;
+        }
+        else if(o1.value == 0 | o2.value == 0){
+          int result = o2.value - o1.value;
+          if(result < 0) marker.set(true);
+          return result;
+        }
+        else return 0;
+      }
+    });
+
+    return marker.get();
+  }
+
+  private boolean mergeTiles(Tile[] tiles){
+    AtomicBoolean marker = new AtomicBoolean();
+    compressTiles(tiles);
+    Arrays.sort(tiles, new Comparator<Tile>() {
+      @Override
+      public int compare(Tile o1, Tile o2) {
+        if (o1.value == o2.value & o1.value != 0) {
+          o1.value *= 2;
+          o2.value = 0;
+          compressTiles(tiles);
+          score += o1.value;
+          if (maxTile < o1.value) maxTile = o1.value;
+          marker.set(true);
+          return 0;
+        }
+        else return 0;
+      }
+    });
+    return marker.get();
+  }
+
   public Tile[][] getGameTiles() {
     return gameTiles;
   }
@@ -225,6 +235,71 @@ public class Model {
     }
     return false;
   }
+
+  public boolean hasBoardChanged(){
+    int countTemp = 0;
+    Tile[][] tempTile = previousStates.peek();
+    for(int i = 0; i < tempTile.length; i++) {
+      for (int j = 0; j < tempTile.length; j++) {
+        countTemp += tempTile[i][j].value;
+      }
+    }
+
+    int countReal = 0;
+    for(int i = 0; i < getGameTiles().length; i++) {
+      for (int j = 0; j < gameTiles.length; j++) {
+        countReal += gameTiles[i][j].value;
+      }
+    }
+
+    if(countTemp != countReal) return true;
+    else return false;
+  }
+
+  public MoveEfficiency getMoveEfficiency(Move move){
+    MoveEfficiency eff = null;
+    move.move();
+    if(!hasBoardChanged()) eff = new MoveEfficiency(-1, 0, move);
+    else eff = new MoveEfficiency(getEmptyTiles().size(), score, move);
+    rollback();
+    return eff;
+  }
+
+  public void autoMove(){
+    PriorityQueue<MoveEfficiency> queue = new PriorityQueue<>(4, Collections.reverseOrder());
+    queue.offer(getMoveEfficiency(new Move(){
+      @Override
+      public void move() {
+        left();
+      }
+    }));
+    queue.offer(getMoveEfficiency(this::right));
+    queue.offer(getMoveEfficiency(() -> up()));
+    queue.offer(getMoveEfficiency(() -> down()));
+
+
+    queue.poll().getMove().move();
+  }
+
+  public void randomMove(){
+    int random = ((int) (Math.random() * 100)) % 4;
+    switch (random) {
+      case 0:
+        left();
+        break;
+      case 1:
+        right();
+        break;
+      case 2:
+        up();
+        break;
+      case 3:
+        down();
+        break;
+    }
+
+  }
+
 
 
 }
