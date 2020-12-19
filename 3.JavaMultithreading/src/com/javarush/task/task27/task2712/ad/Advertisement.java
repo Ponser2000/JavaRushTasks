@@ -33,5 +33,20 @@ public class Advertisement {
     return amountPerOneDisplaying;
   }
 
+  public void revalidate(){
+    if(this.hits <= 0) throw new UnsupportedOperationException();
+    if(this.hits > 0) this.hits--;
+  }
+
+  public int getHits()
+  {
+    return hits;
+  }
+
+  public long getAmountPerSecond()
+  {
+    // Те самые тысячные доли копейки за секунду
+    return amountPerOneDisplaying*1000/duration;
+  }
 
 }
