@@ -72,6 +72,7 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
   @Override
   public boolean add(String s) {
+
     Queue<Entry<String>> queue = new LinkedList<>();
     queue.add(root);
     int  levelCounter = 1;
@@ -104,8 +105,30 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
   }
 
   @Override
-  public String remove(int index) {
-    throw new UnsupportedOperationException();
+  public boolean remove(Object o){
+    if(!(o instanceof String)) throw new UnsupportedOperationException();
+    String removeStr = String.valueOf(o);
+    Queue<Entry> queue = new LinkedList();
+
+    queue.add(root);
+    while (!queue.isEmpty()){
+      Entry<String> currentNode = queue.poll();
+      if (currentNode.leftChild != null && currentNode.leftChild.elementName.equals(removeStr)){
+        currentNode.leftChild = null;
+        currentNode.availableToAddLeftChildren = true;
+        return true;
+      }
+      if (currentNode.rightChild !=null && currentNode.rightChild.elementName.equals(removeStr)){
+        currentNode.rightChild = null;
+        currentNode.availableToAddRightChildren = true;
+        return true;
+      }
+      else {
+        if(currentNode.leftChild != null) queue.add(currentNode.leftChild);
+        if(currentNode.rightChild != null)queue.add(currentNode.rightChild);
+      }
+    }
+    return true;
   }
 
   @Override
@@ -145,5 +168,5 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
     }
     return parentName;
   }
-
+  
 }
