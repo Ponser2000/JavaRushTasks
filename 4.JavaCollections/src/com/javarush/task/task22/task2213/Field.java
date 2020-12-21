@@ -52,5 +52,5 @@ public class Field {
     if (x >= 0 && x < width && y >= 0 && y < height)
       matrix[y][x] = value;
   }
-
+  
 }
