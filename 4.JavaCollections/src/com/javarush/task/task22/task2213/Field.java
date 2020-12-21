@@ -5,18 +5,9 @@ package com.javarush.task.task22.task2213;
  * @project JavaRushTasks/com.javarush.task.task22.task2213
  */
 public class Field {
-  //ширина и высота
   private int width;
   private int height;
-
-  //матрица поля: 1 - клетка занята, 0 - свободна
   private int[][] matrix;
-  
-  public Field(int width, int height) {
-    this.width = width;
-    this.height = height;
-    matrix = new int[height][width];
-  }
 
   public int getWidth() {
     return width;
@@ -30,27 +21,34 @@ public class Field {
     return matrix;
   }
 
-  public void print() {}
+  public Field(int width, int height) {
+    this.height = height;
+    this.width = width;
+    matrix = new int[height][width];
+  }
 
-  public void removeFullLines() {}
+  void print() {
 
-  /**
-   * Метод возвращает значение, которое содержится в матрице с координатами (x,y)
-   * Если координаты за пределами матрицы, метод возвращает null.
-   */
-  public Integer getValue(int x, int y) {
-    if (x >= 0 && x < width && y >= 0 && y < height)
-      return matrix[y][x];
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        if (matrix[i][j] == 0)
+          System.out.print(".");
+        else
+          System.out.print("X");
+      }
+      System.out.println();
+    }
+  }
 
+  void removeFullLines() {
+
+  }
+
+  Integer getValue(int x, int y) {
     return null;
   }
 
-  /**
-   * Метод устанавливает переданное значение(value) в ячейку матрицы с координатами (x,y)
-   */
-  public void setValue(int x, int y, int value) {
-    if (x >= 0 && x < width && y >= 0 && y < height)
-      matrix[y][x] = value;
+  void setValue(int x, int y, int value) {
+
   }
-  
 }
