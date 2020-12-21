@@ -97,7 +97,7 @@ public class Figure {
    * б) не заходит ли она на занятые клетки
    */
   public boolean isCurrentPositionAvailable() {
-/*    Field field = Tetris.game.getField();
+    Field field = Tetris.game.getField();
 
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
@@ -111,7 +111,7 @@ public class Figure {
         }
       }
     }
-*/
+
     return true;
   }
 
