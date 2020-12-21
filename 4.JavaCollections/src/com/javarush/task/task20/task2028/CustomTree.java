@@ -3,13 +3,16 @@ package com.javarush.task.task20.task2028;
 import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /* 
 Построй дерево(1)
 */
 
 public class CustomTree extends AbstractList<String> implements Cloneable, Serializable {
+  Entry<String> root = new Entry<String>(String.valueOf(0));
 
   static class Entry<T> implements Serializable{
     String elementName;
@@ -21,6 +24,13 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
       this.elementName = elementName;
       this.availableToAddLeftChildren = true;
       this.availableToAddRightChildren = true;
+    }
+
+    void checkChildren() {
+      if (leftChild != null)
+        this.availableToAddLeftChildren = false;
+      if (rightChild != null)
+        this.availableToAddRightChildren = false;
     }
 
     boolean isAvailableToAddChildren(){
@@ -36,7 +46,23 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
 
   @Override
   public int size() {
-    return 0;
+    int couner = 0;
+    Queue<Entry> queue = new LinkedList();
+
+    queue.add(root);
+    while (!queue.isEmpty()){
+      Entry<String> currentNode = queue.poll();
+      if (currentNode.leftChild != null){
+        couner += 1;
+        queue.add(currentNode.leftChild);
+      }
+      if (currentNode.rightChild != null){
+        couner += 1;
+        queue.add(currentNode.rightChild);
+      }
+
+    }
+    return couner;
   }
 
   @Override
@@ -45,8 +71,36 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
   }
 
   @Override
-  public void add(int index, String element) {
-    throw new UnsupportedOperationException();
+  public boolean add(String s) {
+    Queue<Entry<String>> queue = new LinkedList<>();
+    queue.add(root);
+    int  levelCounter = 1;
+    Entry<String> currentNode;
+    Entry<String> nodeForAdd = new Entry<>(s);
+
+    while (!queue.isEmpty()){
+      currentNode = queue.poll();
+      currentNode.checkChildren();
+      if (currentNode.isAvailableToAddChildren()){
+        nodeForAdd.parent = currentNode;
+        if (currentNode.availableToAddLeftChildren){
+          currentNode.leftChild = nodeForAdd;
+          return true;
+        }
+        if (currentNode.availableToAddRightChildren){
+          currentNode.rightChild = nodeForAdd;
+          return true;
+        }
+
+      }
+      else {
+        queue.add(currentNode.leftChild);
+        queue.add(currentNode.rightChild);
+        levelCounter += 1;
+      }
+    }
+
+    return false;
   }
 
   @Override
@@ -68,4 +122,28 @@ public class CustomTree extends AbstractList<String> implements Cloneable, Seria
   protected void removeRange(int fromIndex, int toIndex) {
     throw new UnsupportedOperationException();
   }
+
+  public String getParent(String elmentName){
+
+    String parentName = null;
+    Queue<Entry> queue = new LinkedList();
+
+    queue.add(root);
+    while (!queue.isEmpty()){
+      Entry<String> currentNode = queue.poll();
+      if (currentNode.elementName.equals(elmentName)){
+        parentName = currentNode.parent.elementName;
+      }
+      else {
+        if (currentNode.leftChild != null) {
+          queue.add(currentNode.leftChild);
+        }
+        if (currentNode.rightChild != null) {
+          queue.add(currentNode.rightChild);
+        }
+      }
+    }
+    return parentName;
+  }
+
 }
