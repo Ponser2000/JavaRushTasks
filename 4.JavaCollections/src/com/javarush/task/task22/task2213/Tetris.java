@@ -9,6 +9,8 @@ public class Tetris {
   private Field field;
   private Figure figure;
 
+  public static Tetris game;
+
   public Field getField() {
     return field;
   }
@@ -19,7 +21,12 @@ public class Tetris {
 
   public void run(){}
   public void step(){}
+  
+  public static void main(String... args){
 
-  public static void main(String... args){}
+    game = new Tetris();
+    game.run();
+
+  }
 
 }
