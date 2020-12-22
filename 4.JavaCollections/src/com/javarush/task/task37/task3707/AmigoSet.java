@@ -88,7 +88,7 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
       out.writeObject(element);
     }
   }
-
+  
   private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
     in.defaultReadObject();
     int capacityStr = in.readInt();
