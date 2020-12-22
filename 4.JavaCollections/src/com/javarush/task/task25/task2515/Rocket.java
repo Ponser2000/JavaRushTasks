@@ -1,21 +1,27 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * @author Sergey Ponomarev on 22.12.2020
- * @project JavaRushTasks/com.javarush.task.task25.task2515
+ * Класс для объектов-ракета
  */
 public class Rocket extends BaseObject {
 
-  public Rocket(double x, double y) {
-    super(x, y, 1);
-  }
+    public Rocket(double x, double y) {
+        super(x, y, 1);
+    }
 
-  @Override
-  public void draw(Canvas canvas) {
-    canvas.setPoint(x, y, 'R');
-  }
+    /**
+     * Метод рисует свой объект на "канвасе".
+     */
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.setPoint(x, y, 'R');
+    }
 
-  public void move() {
-    y--;
-  }
+    /**
+     * Двигаем себя вверх на один ход.
+     */
+    @Override
+    public void move() {
+        y--;
+    }
 }
