@@ -10,12 +10,10 @@ public class Bomb extends BaseObject{
     super(x, y, radius);
   }
 
-  @Override
   public void draw() {
 
   }
 
-  @Override
   public void move() {
 
   }

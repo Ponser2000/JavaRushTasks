@@ -1,66 +1,92 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * @author Sergey Ponomarev on 22.12.2020
- * @project JavaRushTasks/com.javarush.task.task25.task2515
+ * Базовый класс для всех объектов игры.
  */
-abstract class BaseObject {
-  private double x;
-  private double y;
-  private double radius;
-  private boolean isAlive;
+public abstract class BaseObject {
+    //координаты
+    protected double x;
+    protected double y;
+    //радиус объекта
+    protected double radius;
+    //состояние объект - жив ли объект
+    private boolean isAlive;
 
-  public BaseObject(double x, double y, double radius) {
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
-    this.isAlive = true;
-  }
+    public BaseObject(double x, double y, double radius) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.isAlive = true;
+    }
 
-  public double getX() {
-    return x;
-  }
+    public double getX() {
+        return x;
+    }
 
-  public void setX(double x) {
-    this.x = x;
-  }
+    public void setX(double x) {
+        this.x = x;
+    }
 
-  public double getY() {
-    return y;
-  }
+    public double getY() {
+        return y;
+    }
 
-  public void setY(double y) {
-    this.y = y;
-  }
+    public void setY(double y) {
+        this.y = y;
+    }
 
-  public double getRadius() {
-    return radius;
-  }
+    public double getRadius() {
+        return radius;
+    }
 
-  public void setRadius(double radius) {
-    this.radius = radius;
-  }
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
 
-  public boolean isAlive() {
-    return isAlive;
-  }
+    /**
+     * Метод рисует свой объект на "канвасе".
+     */
+    public void draw(Canvas canvas) {
+        //do nothing
+    }
 
-  public abstract void draw();
-  public abstract void move();
+    /**
+     * Двигаем себя на один ход.
+     */
+    public void move() {
+        //do nothing
+    }
 
-  public void die() {
-    isAlive = false;
-  }
+    /**
+     * Проверяем - не выходит ли (x,y) за границы.
+     */
+    public void checkBorders(double minx, double maxx, double miny, double maxy) {
+        if (x < minx) x = minx;
+        if (x > maxx) x = maxx;
+        if (y < miny) y = miny;
+        if (y > maxy) y = maxy;
+    }
 
-  /**
-   * Проверяем - пересекаются ли переданный(o) и наш(this) объекты.
-   */
-  public boolean isIntersect(BaseObject o) {
-    double dx = x - o.x;
-    double dy = y - o.y;
-    double destination = Math.sqrt(dx * dx + dy * dy);
-    double destination2 = Math.max(radius, o.radius);
-    return destination <= destination2;
-  }
+    public boolean isAlive() {
+        return isAlive;
+    }
 
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public void die() {
+        isAlive = false;
+    }
+
+    /**
+     * Проверяем - пересекаются ли переданный(o) и наш(this) объекты.
+     */
+    public boolean isIntersect(BaseObject o) {
+        double dx = x - o.x;
+        double dy = y - o.y;
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        double distance2 = Math.max(radius, o.radius);
+        return distance <= distance2;
+    }
 }
