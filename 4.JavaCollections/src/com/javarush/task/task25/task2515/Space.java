@@ -1,63 +1,190 @@
 package com.javarush.task.task25.task2515;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Sergey Ponomarev on 22.12.2020
- * @project JavaRushTasks/com.javarush.task.task25.task2515
+ * Главный класс игры - Космос (Space)
  */
 public class Space {
-  private int width;
-  private int height;
-  private List<Ufo> ufos = new ArrayList<>();
-  private List<Rocket> rockets = new ArrayList<>();
-  private List<Bomb> bombs = new ArrayList<>();
-  public static Space game;
+    //Ширина и высота игрового поля
+    private int width;
+    private int height;
+
+    //Космический корабль
+    private SpaceShip ship;
+    //Список НЛО
+    private List<Ufo> ufos = new ArrayList<Ufo>();
+    //Список бомб
+    private List<Bomb> bombs = new ArrayList<Bomb>();
+    //Список ракет
+    private List<Rocket> rockets = new ArrayList<Rocket>();
+
+    public Space(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
+     * Основной цикл программы.
+     * Тут происходят все важные действия
+     */
+    public void run() {
+        //Создаем холст для отрисовки.
+        Canvas canvas = new Canvas(width, height);
+
+        //Создаем объект "наблюдатель за клавиатурой" и стартуем его.
+        KeyboardObserver keyboardObserver = new KeyboardObserver();
+        keyboardObserver.start();
+
+        //Игра работает, пока корабль жив
+        while (ship.isAlive()) {
+            //"наблюдатель" содержит события о нажатии клавиш?
+            if (keyboardObserver.hasKeyEvents()) {
+                KeyEvent event = keyboardObserver.getEventFromTop();
+                //Если "стрелка влево" - сдвинуть фигурку влево
+                System.out.print(event.getKeyCode());
+                if (event.getKeyCode() == KeyEvent.VK_LEFT)
+                    ship.moveLeft();
+                    //Если "стрелка вправо" - сдвинуть фигурку вправо
+                else if (event.getKeyCode() == KeyEvent.VK_RIGHT)
+                    ship.moveRight();
+                    //Если "пробел" - стреляем
+                else if (event.getKeyCode() == KeyEvent.VK_SPACE)
+                    ship.fire();
+            }
+
+            //двигаем все объекты игры
+            moveAllItems();
+
+            //проверяем столкновения
+            checkBombs();
+            checkRockets();
+            //удаляем умершие объекты из списков
+            removeDead();
+
+            //Создаем НЛО (1 раз в 10 ходов)
+            createUfo();
+
+            //Отрисовываем все объекты на холст, а холст выводим на экран
+            canvas.clear();
+            draw(canvas);
+            canvas.print();
+
+            //Пауза 300 миллисекунд
+            Space.sleep(300);
+        }
+
+        //Выводим сообщение "Game Over"
+        System.out.println("Game Over!");
+    }
+
+    /**
+     * Двигаем все объекты игры
+     */
+    public void moveAllItems() {
+        for (BaseObject object : getAllItems()) {
+            object.move();
+        }
+    }
+
+    /**
+     * Метод возвращает общий список, который содержит все объекты игры
+     */
+    public List<BaseObject> getAllItems() {
+        ArrayList<BaseObject> list = new ArrayList<BaseObject>(ufos);
+        list.add(ship);
+        list.addAll(bombs);
+        list.addAll(rockets);
+        return list;
+    }
+
+    /**
+     * Создаем новый НЛО. 1 раз на 10 вызовов.
+     */
+    public void createUfo() {
+        //тут нужно создать новый НЛО.
+    }
+
+    /**
+     * Проверяем бомбы.
+     * а) столкновение с кораблем (бомба и корабль умирают)
+     * б) падение ниже края игрового поля (бомба умирает)
+     */
+    public void checkBombs() {
+        //тут нужно проверить все возможные столкновения для каждой бомбы.
+    }
+
+    /**
+     * Проверяем рокеты.
+     * а) столкновение с НЛО (ракета и НЛО умирают)
+     * б) вылет выше края игрового поля (ракета умирает)
+     */
+    public void checkRockets() {
+        //тут нужно проверить все возможные столкновения для каждой ракеты.
+    }
+
+    /**
+     * Удаляем умершие объекты (бомбы, ракеты, НЛО) из списков
+     */
+    public void removeDead() {
+        //тут нужно удалить все умершие объекты из списков (кроме космического корабля)
+    }
+
+    /**
+     * Отрисовка всех объектов игры:
+     * а) заполняем весь холст точками.
+     * б) отрисовываем все объекты на холст.
+     */
+    public void draw(Canvas canvas) {
+        //тут нужно отрисовать все объекты игры
+    }
 
 
-  public int getWidth() {
-    return width;
-  }
+    public SpaceShip getShip() {
+        return ship;
+    }
 
-  public int getHeight() {
-    return height;
-  }
+    public void setShip(SpaceShip ship) {
+        this.ship = ship;
+    }
 
-  private SpaceShip ship;
+    public List<Ufo> getUfos() {
+        return ufos;
+    }
 
-  public SpaceShip getShip() {
-    return ship;
-  }
+    public int getWidth() {
+        return width;
+    }
 
-  public void setShip(SpaceShip ship) {
-    this.ship = ship;
-  }
+    public int getHeight() {
+        return height;
+    }
 
-  public List<Ufo> getUfos() {
-    return ufos;
-  }
+    public List<Bomb> getBombs() {
+        return bombs;
+    }
 
-  public List<Rocket> getRockets() {
-    return rockets;
-  }
+    public List<Rocket> getRockets() {
+        return rockets;
+    }
 
-  public List<Bomb> getBombs() {
-    return bombs;
-  }
+    public static Space game;
 
-  public Space(int width, int height) {
-    this.width = width;
-    this.height = height;
-  }
+    public static void main(String[] args) throws Exception {
+        game = new Space(20, 20);
+        game.setShip(new SpaceShip(10, 18));
+        game.run();
+    }
 
-  public void run(){}
-
-  public void draw(){}
-  
-  public void sleep(int ms){}
-
-  public static void main(String[] args) {
-
-  }
+    /**
+     * Метод делает паузу длинной delay миллисекунд.
+     */
+    public static void sleep(int delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException ignored) {
+        }
+    }
 }
