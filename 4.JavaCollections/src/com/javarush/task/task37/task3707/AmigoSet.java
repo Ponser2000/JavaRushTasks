@@ -5,6 +5,7 @@ import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -29,16 +30,38 @@ public class AmigoSet<E> extends AbstractSet<E> implements Cloneable, Serializab
   }
 
   @Override
-  public Iterator iterator() {
-    return null;
+  public Iterator<E> iterator() {
+    return map.keySet().iterator();
   }
 
   @Override
   public int size() {
-    return 0;
+    return map.size();
   }
 
   public boolean add(E e) {
     return map.put(e,PRESENT) == null ? true : false;
   }
+
+  @Override
+  public boolean remove(Object o) {
+    return super.remove(o);
+  }
+
+  @Override
+  public void clear() {
+    map.clear();
+  }
+
+  @Override
+  public boolean contains(Object o) {
+    return super.contains(o);
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return map.isEmpty();
+  }
+
+
 }
