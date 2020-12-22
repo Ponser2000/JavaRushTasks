@@ -1,12 +1,12 @@
 package com.javarush.task.task33.task3307;
 
+import java.io.IOException;
+import java.io.StringReader;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.io.IOException;
-import java.io.StringReader;
 
 /* 
 Десериализация XML объекта
