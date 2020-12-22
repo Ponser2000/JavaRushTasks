@@ -1,20 +1,26 @@
 package com.javarush.task.task25.task2515;
 
 /**
- * @author Sergey Ponomarev on 22.12.2020
- * @project JavaRushTasks/com.javarush.task.task25.task2515
+ * Класс для бомбы.
  */
-public class Bomb extends BaseObject{
+public class Bomb extends BaseObject {
+    public Bomb(double x, double y) {
+        super(x, y, 1);
+    }
 
-  public Bomb(double x, double y) {
-    super(x, y, 1);
-  }
+    /**
+     * Отрисовываем себя на холсте.
+     */
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.setPoint(x, y, 'B');
+    }
 
-  public void draw(Canvas canvas) {
-    canvas.setPoint(x,y,'B');
-  }
-
-  public void move() {
-    y++;
-  }
+    /**
+     * Двигаем себя вниз на один ход.
+     */
+    @Override
+    public void move() {
+        y++;
+    }
 }
