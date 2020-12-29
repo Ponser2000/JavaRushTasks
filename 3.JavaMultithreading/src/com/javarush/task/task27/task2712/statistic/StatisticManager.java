@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StatisticManager {
-
   private static StatisticManager ourInstance = new StatisticManager();
 
   public static StatisticManager getInstance() {
@@ -18,13 +17,17 @@ public class StatisticManager {
   }
 
   private StatisticStorage statisticStorage = new StatisticStorage();
+
+  public Set<Cook> getCooks() {
+    return cooks;
+  }
+
   private Set<Cook> cooks = new HashSet<>();
 
   private StatisticManager() {
   }
 
   private class StatisticStorage {
-
     private Map<EventType, List<EventDataRow>> storage = new HashMap<>();
 
     private StatisticStorage() {
@@ -35,17 +38,15 @@ public class StatisticManager {
 
     private void put(EventDataRow data) {
       EventType type = data.getType();
-      if (!this.storage.containsKey(type)) {
+      if (!this.storage.containsKey(type))
         throw new UnsupportedOperationException();
-      }
 
       this.storage.get(type).add(data);
     }
 
     private List<EventDataRow> get(EventType type) {
-      if (!this.storage.containsKey(type)) {
+      if (!this.storage.containsKey(type))
         throw new UnsupportedOperationException();
-      }
 
       return this.storage.get(type);
     }
