@@ -4,9 +4,9 @@ import java.util.Date;
 
 public interface EventDataRow {
 
-    EventType getType();
+  EventType getType();
 
-    Date getDate();
+  Date getDate();
 
-    int getTime();
+  int getTime();
 }

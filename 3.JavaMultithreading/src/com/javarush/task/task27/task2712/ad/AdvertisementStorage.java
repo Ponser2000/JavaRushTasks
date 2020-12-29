@@ -8,10 +8,11 @@ import java.util.List;
  * @project JavaRushTasks/com.javarush.task.task27.task2712.ad
  */
 public class AdvertisementStorage {
+
   private static AdvertisementStorage instance = new AdvertisementStorage();
   private final List<Advertisement> videos = new ArrayList<>();
 
-  public static AdvertisementStorage getInstance(){
+  public static AdvertisementStorage getInstance() {
     return instance;
   }
 
@@ -26,7 +27,7 @@ public class AdvertisementStorage {
     return videos;
   }
 
-  public void add(Advertisement advertisement){
+  public void add(Advertisement advertisement) {
     videos.add(advertisement);
   }
 

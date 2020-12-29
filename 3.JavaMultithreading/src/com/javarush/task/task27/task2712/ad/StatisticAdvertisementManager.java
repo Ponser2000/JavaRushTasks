@@ -1,31 +1,27 @@
 package com.javarush.task.task27.task2712.ad;
 
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StatisticAdvertisementManager {
-    private static StatisticAdvertisementManager ourInstance = new StatisticAdvertisementManager();
-    AdvertisementStorage advertisementStorage = AdvertisementStorage.getInstance();
 
-    public static StatisticAdvertisementManager getInstance() {
-        return ourInstance;
-    }
+  private static StatisticAdvertisementManager ourInstance = new StatisticAdvertisementManager();
+  private AdvertisementStorage storage = AdvertisementStorage.getInstance();
 
-    private StatisticAdvertisementManager() {
-    }
+  public static StatisticAdvertisementManager getInstance() {
+    return ourInstance;
+  }
 
-    public Map<String,Integer> getVideo()
-    {
-        Map<String,Integer> map = new TreeMap<>(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.toLowerCase().compareTo(o2.toLowerCase());
-            }
-        });
-        for(Advertisement adv : advertisementStorage.list()) {
-            map.put(adv.getName(),adv.getHits());
-        }
-        return map;
+  private StatisticAdvertisementManager() {
+  }
+
+  public List<Advertisement> getVideoSet(boolean isActive) {
+    List<Advertisement> result = new ArrayList<>();
+    for (Advertisement advertisement : storage.list()) {
+      if (!isActive ^ advertisement.isActive()) {
+        result.add(advertisement);
+      }
     }
+    return result;
+  }
 }

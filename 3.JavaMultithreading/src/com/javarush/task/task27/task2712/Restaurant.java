@@ -5,11 +5,11 @@ import com.javarush.task.task27.task2712.kitchen.Dish;
 import com.javarush.task.task27.task2712.kitchen.Waiter;
 
 /**
- * @author Sergey Ponomarev on 16.12.2020
- * JavaRushTasks/com.javarush.task.task27.task2712.kitchen
+ * @author Sergey Ponomarev on 16.12.2020 JavaRushTasks/com.javarush.task.task27.task2712.kitchen
  */
 
 public class Restaurant {
+
   public static void main(String[] args) {
     Tablet tablet = new Tablet(5);
     Cook cook = new Cook("Amigo");
@@ -18,9 +18,9 @@ public class Restaurant {
     cook.addObserver(waiter);
 
     tablet.createOrder();
-//    tablet.createOrder();
-//    tablet.createOrder();
-//    tablet.createOrder();
+    tablet.createOrder();
+    tablet.createOrder();
+    tablet.createOrder();
 
     DirectorTablet directorTablet = new DirectorTablet();
     directorTablet.printAdvertisementProfit();

@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Tablet extends Observable {
+
   private final int number;
   private static Logger logger = Logger.getLogger(Tablet.class.getName());
 
@@ -24,7 +25,8 @@ public class Tablet extends Observable {
       if (order.isEmpty()) {
         return null;
       }
-      AdvertisementManager advertisementManager = new AdvertisementManager(order.getTotalCookingTime() * 60);
+      AdvertisementManager advertisementManager = new AdvertisementManager(
+          order.getTotalCookingTime() * 60);
       advertisementManager.processVideos();
       setChanged();
       notifyObservers(order);

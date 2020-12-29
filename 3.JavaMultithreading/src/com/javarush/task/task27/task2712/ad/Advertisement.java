@@ -5,6 +5,7 @@ package com.javarush.task.task27.task2712.ad;
  * @project JavaRushTasks/com.javarush.task.task27.task2712.ad
  */
 public class Advertisement {
+
   //видео
   private Object content;
 
@@ -56,15 +57,13 @@ public class Advertisement {
     return hits > 0;
   }
 
-  public int getHits()
-  {
+  public int getHits() {
     return hits;
   }
 
-  public long getAmountPerSecond()
-  {
+  public long getAmountPerSecond() {
     // Те самые тысячные доли копейки за секунду
-    return amountPerOneDisplaying*1000/duration;
+    return amountPerOneDisplaying * 1000 / duration;
   }
 }
 

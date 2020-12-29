@@ -25,14 +25,14 @@ public enum Dish {
   }
 
   public static String allDishesToString() {
-    String result="";
+    String result = "";
     for (Dish dish : Dish.values()) {
       if ("".equals(result)) {
         result += dish.name();
       } else {
-        result += ", "+ dish.name();
+        result += ", " + dish.name();
       }
     }
-   return result;
+    return result;
   }
 }

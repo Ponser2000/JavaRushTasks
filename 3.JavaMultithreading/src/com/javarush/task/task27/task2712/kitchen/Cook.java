@@ -8,6 +8,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Cook extends Observable implements Observer {
+
   private final String name;
 
   public Cook(String name) {
@@ -20,7 +21,8 @@ public class Cook extends Observable implements Observer {
     ConsoleHelper.writeMessage("Start cooking - " + order);
     setChanged();
     notifyObservers(order);
-    CookedOrderEventDataRow row = new CookedOrderEventDataRow(order.getTablet().toString(), name, order.getTotalCookingTime() * 60, order.getDishes());
+    CookedOrderEventDataRow row = new CookedOrderEventDataRow(order.getTablet().toString(), name,
+        order.getTotalCookingTime() * 60, order.getDishes());
     StatisticManager.getInstance().register(row);
   }
 
