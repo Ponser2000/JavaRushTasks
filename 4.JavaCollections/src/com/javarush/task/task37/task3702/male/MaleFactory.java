@@ -1,12 +1,13 @@
 package com.javarush.task.task37.task3702.male;
 
+import com.javarush.task.task37.task3702.AbstractFactory;
 import com.javarush.task.task37.task3702.Human;
 
 /**
  * @author Sergey Ponomarev on 29.12.2020
  * @project JavaRushTasks/com.javarush.task.task37.task3702.male
  */
-public class MaleFactory {
+public class MaleFactory implements AbstractFactory {
   public Human getPerson(int age){
     Human result;
     if (age > TeenBoy.MAX_AGE) {
