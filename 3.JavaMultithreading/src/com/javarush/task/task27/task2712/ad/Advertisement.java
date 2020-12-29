@@ -1,11 +1,6 @@
 package com.javarush.task.task27.task2712.ad;
 
-/**
- * @author Sergey Ponomarev on 18.12.2020
- * @project JavaRushTasks/com.javarush.task.task27.task2712.ad
- */
 public class Advertisement {
-
   //видео
   private Object content;
 
@@ -60,10 +55,4 @@ public class Advertisement {
   public int getHits() {
     return hits;
   }
-
-  public long getAmountPerSecond() {
-    // Те самые тысячные доли копейки за секунду
-    return amountPerOneDisplaying * 1000 / duration;
-  }
 }
-

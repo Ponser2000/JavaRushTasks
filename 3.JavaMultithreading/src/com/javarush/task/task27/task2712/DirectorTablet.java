@@ -4,12 +4,7 @@ import com.javarush.task.task27.task2712.ad.Advertisement;
 import com.javarush.task.task27.task2712.ad.StatisticAdvertisementManager;
 import com.javarush.task.task27.task2712.statistic.StatisticManager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class DirectorTablet {
 
@@ -20,8 +15,8 @@ public class DirectorTablet {
     Collections.sort(list);
 
     for (String key : list) {
-      double amount = 1.0 * profitMap.get(key) / 100;
-      System.out.println(key + " - " + String.format(Locale.ENGLISH, "%.2f", amount));
+      long aLong = profitMap.get(key);
+      System.out.println(key + " - " + (aLong / 100) + "." + (aLong % 100));
     }
   }
 
@@ -44,7 +39,6 @@ public class DirectorTablet {
       System.out.println();
     }
   }
-
 
   public void printActiveVideoSet() {
     List<Advertisement> videoSet = StatisticAdvertisementManager.getInstance().getVideoSet(true);
