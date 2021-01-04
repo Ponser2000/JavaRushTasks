@@ -1,10 +1,7 @@
 package com.javarush.task.task39.task3913;
 
-import com.javarush.task.task39.task3913.query.DateQuery;
-import com.javarush.task.task39.task3913.query.EventQuery;
-import com.javarush.task.task39.task3913.query.IPQuery;
-import com.javarush.task.task39.task3913.query.QLQuery;
-import com.javarush.task.task39.task3913.query.UserQuery;
+import com.javarush.task.task39.task3913.query.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,18 +11,11 @@ import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQuery {
-
   private Path logDir;
   private List<LogEntity> logEntities = new ArrayList<>();
   private DateFormat simpleDateFormat = new SimpleDateFormat("d.M.yyyy H:m:s");
@@ -285,9 +275,8 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     }
     Date minDate = set.iterator().next();
     for (Date date : set) {
-      if (date.getTime() < minDate.getTime()) {
+      if (date.getTime() < minDate.getTime())
         minDate = date;
-      }
     }
     return minDate;
   }
@@ -309,9 +298,8 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     }
     Date minDate = set.iterator().next();
     for (Date date : set) {
-      if (date.getTime() < minDate.getTime()) {
+      if (date.getTime() < minDate.getTime())
         minDate = date;
-      }
     }
     return minDate;
   }
@@ -333,9 +321,8 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     }
     Date minDate = set.iterator().next();
     for (Date date : set) {
-      if (date.getTime() < minDate.getTime()) {
+      if (date.getTime() < minDate.getTime())
         minDate = date;
-      }
     }
     return minDate;
   }
@@ -497,15 +484,40 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   @Override
   public Set<Object> execute(String query) {
     Set<Object> result = new HashSet<>();
-    String field;
-    Pattern pattern = Pattern.compile("get (ip|user|date|event|status)");
+    String field1;
+    String field2 = null;
+    String value1 = null;
+    Pattern pattern = Pattern.compile("get (ip|user|date|event|status)"
+        + "( for (ip|user|date|event|status) = \"(.*?)\")?");
     Matcher matcher = pattern.matcher(query);
     matcher.find();
-    field = matcher.group(1);
-
-    for (int i = 0; i < logEntities.size(); i++) {
-      result.add(getCurrentValue(logEntities.get(i), field));
+    field1 = matcher.group(1);
+    if (matcher.group(2) != null) {
+      field2 = matcher.group(3);
+      value1 = matcher.group(4);
     }
+
+    if (field2 != null && value1 != null) {
+      for (int i = 0; i < logEntities.size(); i++) {
+        if (field2.equals("date")) {
+          try {
+            if (logEntities.get(i).getDate().getTime() == simpleDateFormat.parse(value1).getTime()) {
+              result.add(getCurrentValue(logEntities.get(i), field1));
+            }
+          } catch (ParseException e) {
+          }
+        } else {
+          if (value1.equals(getCurrentValue(logEntities.get(i), field2).toString())) {
+            result.add(getCurrentValue(logEntities.get(i), field1));
+          }
+        }
+      }
+    } else {
+      for (int i = 0; i < logEntities.size(); i++) {
+        result.add(getCurrentValue(logEntities.get(i), field1));
+      }
+    }
+
     return result;
   }
 
@@ -532,8 +544,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
               }
               Status status = readStatus(params[4]);
 
-              LogEntity logEntity = new LogEntity(ip, user, date, event, eventAdditionalParameter,
-                  status);
+              LogEntity logEntity = new LogEntity(ip, user, date, event, eventAdditionalParameter, status);
               logEntities.add(logEntity);
             }
           }
@@ -650,7 +661,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private class LogEntity {
-
     private String ip;
     private String user;
     private Date date;
@@ -658,8 +668,7 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
     private int eventAdditionalParameter;
     private Status status;
 
-    public LogEntity(String ip, String user, Date date, Event event, int eventAdditionalParameter,
-        Status status) {
+    public LogEntity(String ip, String user, Date date, Event event, int eventAdditionalParameter, Status status) {
       this.ip = ip;
       this.user = user;
       this.date = date;
@@ -694,14 +703,12 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private abstract class Command {
-
     protected LogEntity logEntity;
 
     abstract Object execute();
   }
 
   private class GetIpCommand extends Command {
-
     public GetIpCommand(LogEntity logEntity) {
       this.logEntity = logEntity;
     }
@@ -713,7 +720,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private class GetUserCommand extends Command {
-
     public GetUserCommand(LogEntity logEntity) {
       this.logEntity = logEntity;
     }
@@ -725,7 +731,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private class GetDateCommand extends Command {
-
     public GetDateCommand(LogEntity logEntity) {
       this.logEntity = logEntity;
     }
@@ -737,7 +742,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private class GetEventCommand extends Command {
-
     public GetEventCommand(LogEntity logEntity) {
       this.logEntity = logEntity;
     }
@@ -749,7 +753,6 @@ public class LogParser implements IPQuery, UserQuery, DateQuery, EventQuery, QLQ
   }
 
   private class GetStatusCommand extends Command {
-
     public GetStatusCommand(LogEntity logEntity) {
       this.logEntity = logEntity;
     }
