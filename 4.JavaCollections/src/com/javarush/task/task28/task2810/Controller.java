@@ -34,7 +34,7 @@ public class Controller {
     List<Vacancy> totalVacList = new ArrayList<>();
 
     for (Provider provider : providers) {
-      totalVacList.addAll(provider.getJavaVacancies(null));
+      totalVacList.addAll(provider.getJavaVacancies("Краснодар"));
     }
 
     System.out.println(totalVacList.size());
