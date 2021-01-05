@@ -1,5 +1,9 @@
 package com.javarush.task.task28.task2810.model;
 
+import com.javarush.task.task28.task2810.vo.Vacancy;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Sergey Ponomarev on 05.01.2021
  * @project JavaRushTasks/com.javarush.task.task28.task2810.model
@@ -12,4 +16,9 @@ public class HHStrategy implements Strategy{
   private static final String URL_FORMAT = "https://hh.ru/search/vacancy?text=java+%s&page=%d";
 
   private static final String LINK = String.format(URL_FORMAT, "Kiev", 3);
+
+  @Override
+  public List<Vacancy> getVacancies(String searchString) {
+    return new ArrayList<>();
+  }
 }
