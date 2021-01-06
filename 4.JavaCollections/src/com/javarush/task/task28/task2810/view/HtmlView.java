@@ -8,12 +8,20 @@ import java.util.List;
  * @author Sergey Ponomarev on 06.01.2021
  * @project JavaRushTasks/com.javarush.task.task28.task2810.view
  */
-public class HtmlView implements View{
+public class HtmlView implements View {
+
+  private final String filePath = "./4.JavaCollections/src/" + this.getClass().getPackage().getName().replaceAll("[.]", "/") + "/vacancies.html";
+
   private Controller controller;
 
   @Override
   public void update(List<Vacancy> vacancies) {
-    System.out.println(vacancies.size());
+    try {
+      String newContent = getUpdatedFileContent(vacancies);
+      updateFile(newContent);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -21,7 +29,15 @@ public class HtmlView implements View{
     this.controller = controller;
   }
 
-  public void userCitySelectEmulationMethod(){
+  public void userCitySelectEmulationMethod() {
     controller.onCitySelect("Odessa");
+  }
+
+  private String getUpdatedFileContent(List<Vacancy> vacancies) {
+    return null;
+  }
+
+  private void updateFile(String content) {
+
   }
 }
