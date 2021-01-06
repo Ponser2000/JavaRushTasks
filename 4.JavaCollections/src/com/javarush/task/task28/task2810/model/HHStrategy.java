@@ -25,10 +25,11 @@ public class HHStrategy implements Strategy{
   private static final String LINK = String.format(URL_FORMAT, "Краснодар", 0);
 
   @Override
-  public List<Vacancy> getVacancies(String searchString) throws IOException {
+  public List<Vacancy> getVacancies(String searchString) {
     List<Vacancy> allVacancies = new ArrayList<>();
 
     int page = 0;
+    try {
       do {
         Document doc = getDocument(searchString, page);
 
@@ -55,6 +56,10 @@ public class HHStrategy implements Strategy{
 
         page++;
       } while (true);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
     return allVacancies;
   }
 

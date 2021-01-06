@@ -21,7 +21,7 @@ public class Provider {
     this.strategy = strategy;
   }
 
-  public List<Vacancy> getJavaVacancies(String searchString) throws IOException {
+  public List<Vacancy> getJavaVacancies(String searchString){
     if (searchString == null) {
       return Collections.emptyList();
     }
