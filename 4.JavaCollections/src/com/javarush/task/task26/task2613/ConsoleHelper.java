@@ -1,5 +1,6 @@
 package com.javarush.task.task26.task2613;
 
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,9 +18,12 @@ public class ConsoleHelper {
     System.out.println(message);
   }
 
-  public static String readString(){
+  public static String readString() throws InterruptOperationException{
     try {
       String result = bis.readLine();
+      if ("exit".equals(result.toLowerCase())) {
+        throw new InterruptOperationException();
+      }
       return result;
     } catch (IOException e) {
       /* NOP */
@@ -27,10 +31,9 @@ public class ConsoleHelper {
     return null;
   }
 
-  public static String askCurrencyCode(){
+  public static String askCurrencyCode() throws InterruptOperationException{
     writeMessage("Введите код валюды (XXX): ");
     Pattern p = Pattern.compile("^[A-zА-яЁё]+$");
-
     while(true) {
       String code = readString();
       Matcher m = p.matcher(code);
@@ -42,7 +45,7 @@ public class ConsoleHelper {
     }
   }
 
-  public static String[] getValidTwoDigits(String currencyCode){
+  public static String[] getValidTwoDigits(String currencyCode) throws InterruptOperationException{
     writeMessage("Введите через пробел номинал и количество купюр:");
     String[] dengi;
     while(true) {
@@ -69,15 +72,18 @@ public class ConsoleHelper {
     }
   }
 
-  public static Operation askOperation(){
-    writeMessage("Выберите операцию:");
-    while(true){
-      try{
-        int choice = Integer.parseInt(readString());
-        return Operation.getAllowableOperationByOrdinal(choice);
-      } catch (Exception e) {
-        writeMessage("Повторите ввод:");
-        continue;
+  public static Operation askOperation() throws InterruptOperationException {
+    while (true) {
+      ConsoleHelper.writeMessage("Пожалуйста, выберите доступную операцию или наберите 'EXIT' для завершения работы");
+      ConsoleHelper.writeMessage("\t 1 - operation.INFO");
+      ConsoleHelper.writeMessage("\t 2 - operation.DEPOSIT");
+      ConsoleHelper.writeMessage("\t 3 - operation.WITHDRAW");
+      ConsoleHelper.writeMessage("\t 4 - operation.EXIT");
+      Integer i = Integer.parseInt(ConsoleHelper.readString().trim());
+      try {
+        return Operation.getAllowableOperationByOrdinal(i);
+      } catch (IllegalArgumentException e) {
+        ConsoleHelper.writeMessage("Не корректный ввод. Повторите.");
       }
     }
   }

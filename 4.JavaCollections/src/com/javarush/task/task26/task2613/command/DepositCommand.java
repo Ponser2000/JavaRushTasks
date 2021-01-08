@@ -3,6 +3,7 @@ package com.javarush.task.task26.task2613.command;
 import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.CurrencyManipulator;
 import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
+import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 
 /**
  * @author Sergey Ponomarev on 08.01.2021
@@ -11,11 +12,10 @@ import com.javarush.task.task26.task2613.CurrencyManipulatorFactory;
 class DepositCommand implements Command{
 
   @Override
-  public void execute() {
+  public void execute() throws InterruptOperationException {
     ConsoleHelper.writeMessage("Depositing...");
     String currencyCode = ConsoleHelper.askCurrencyCode();
     CurrencyManipulator manipulator = CurrencyManipulatorFactory.getManipulatorByCurrencyCode(currencyCode);
-
     while (true) {
       String[] split = ConsoleHelper.getValidTwoDigits(currencyCode);
       try {

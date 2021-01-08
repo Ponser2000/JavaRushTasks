@@ -22,7 +22,7 @@ class InfoCommand implements Command{
     }
 
     if (!hasMoney) {
-      ConsoleHelper.writeMessage("No money available.");
+      ConsoleHelper.writeMessage("Нет доступных средств.");
     }
   }
 }
