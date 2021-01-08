@@ -4,6 +4,7 @@ import com.javarush.task.task26.task2613.exception.InterruptOperationException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,10 @@ import java.util.regex.Pattern;
  * @project JavaRushTasks/com.javarush.task.task26.task2613
  */
 public class ConsoleHelper {
+  private static ResourceBundle res = ResourceBundle
+      .getBundle(CashMachine.class.getPackage().getName() + ".resources.common_en");
+
+
   private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
 
   public static void writeMessage(String message){
@@ -74,7 +79,7 @@ public class ConsoleHelper {
 
   public static Operation askOperation() throws InterruptOperationException {
     while (true) {
-      ConsoleHelper.writeMessage("Пожалуйста, выберите доступную операцию или наберите 'EXIT' для завершения работы");
+      ConsoleHelper.writeMessage(res.getString("choose.operation"));
       ConsoleHelper.writeMessage("\t 1 - operation.INFO");
       ConsoleHelper.writeMessage("\t 2 - operation.DEPOSIT");
       ConsoleHelper.writeMessage("\t 3 - operation.WITHDRAW");
