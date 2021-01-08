@@ -27,4 +27,8 @@ public class CurrencyManipulator {
       denominations.put(denomination, count);
     }
   }
+
+  public int getTotalAmount(){
+    return denominations.keySet().stream().mapToInt(key -> denominations.get(key) * key).sum();
+  }
 }
