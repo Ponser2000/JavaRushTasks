@@ -1,15 +1,18 @@
 package com.javarush.task.task26.task2613.command;
 
+import com.javarush.task.task26.task2613.CashMachine;
 import com.javarush.task.task26.task2613.ConsoleHelper;
 import com.javarush.task.task26.task2613.exception.InterruptOperationException;
+import java.util.ResourceBundle;
 
 /**
  * @author Sergey Ponomarev on 08.01.2021
  * @project JavaRushTasks/com.javarush.task.task26.task2613.command
  */
 public class LoginCommand implements Command{
-  private String validCreditCard = "123456789012";
-  private String validPin = "1234";
+  private ResourceBundle validCreditCards = ResourceBundle.getBundle(
+      CashMachine.class.getPackage().getName() + ".resources.verifiedCards");
+
 
   @Override
   public void execute() throws InterruptOperationException {
@@ -24,7 +27,7 @@ public class LoginCommand implements Command{
         ConsoleHelper.writeMessage("Введите правильный номер кредитной карты - 12 цифр, пин-код - 4 цифры.");
       } else {
         try {
-          if (creditCardNumber.equals(validCreditCard) && pinStr.equals(validPin)) {
+          if (validCreditCards.containsKey(creditCardNumber) && pinStr.equals(validCreditCards.getString(creditCardNumber))) {
             ConsoleHelper.writeMessage(String.format("Кредитная карта [%s] прошла проверку!", creditCardNumber));
             break;
           } else {
