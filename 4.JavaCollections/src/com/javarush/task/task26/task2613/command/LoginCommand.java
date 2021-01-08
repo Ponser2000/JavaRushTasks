@@ -12,10 +12,10 @@ import java.util.ResourceBundle;
 public class LoginCommand implements Command {
 
   private ResourceBundle validCreditCards = ResourceBundle
-      .getBundle(CashMachine.class.getPackage().getName() + ".resources.verifiedCards");
+      .getBundle(CashMachine.RESOURCE_PATH + "verifiedCards");
 
   private ResourceBundle res = ResourceBundle
-      .getBundle(CashMachine.class.getPackage().getName() + ".resources.login_en");
+      .getBundle(CashMachine.RESOURCE_PATH + "login_en");
 
 
   @Override

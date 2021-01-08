@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 class ExitCommand implements Command {
 
   private ResourceBundle res = ResourceBundle
-      .getBundle(CashMachine.class.getPackage().getName() + ".resources.exit_en");
+      .getBundle(CashMachine.RESOURCE_PATH + "exit_en");
 
   @Override
   public void execute() throws InterruptOperationException {

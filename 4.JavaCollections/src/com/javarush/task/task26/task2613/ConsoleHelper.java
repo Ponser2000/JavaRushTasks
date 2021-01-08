@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public class ConsoleHelper {
   private static ResourceBundle res = ResourceBundle
-      .getBundle(CashMachine.class.getPackage().getName() + ".resources.common_en");
+      .getBundle(CashMachine.RESOURCE_PATH + "common_en");
 
 
   private static BufferedReader bis = new BufferedReader(new InputStreamReader(System.in));
@@ -91,6 +91,9 @@ public class ConsoleHelper {
         ConsoleHelper.writeMessage("Не корректный ввод. Повторите.");
       }
     }
+  }
+  public static void printExitMessage() {
+    ConsoleHelper.writeMessage(res.getString("the.end"));
   }
 
 }

@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
  */
 class WithdrawCommand implements Command{
   private ResourceBundle res = ResourceBundle
-      .getBundle(CashMachine.class.getPackage().getName() + ".resources.withdraw_en");
+      .getBundle(CashMachine.RESOURCE_PATH + "withdraw_en");
 
 
   @Override
