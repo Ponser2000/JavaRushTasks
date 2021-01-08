@@ -67,6 +67,19 @@ public class ConsoleHelper {
 
       return dengi;
     }
-
   }
+
+  public static Operation askOperation(){
+    writeMessage("Выберите операцию:");
+    while(true){
+      try{
+        int choice = Integer.parseInt(readString());
+        return Operation.getAllowableOperationByOrdinal(choice);
+      } catch (Exception e) {
+        writeMessage("Повторите ввод:");
+        continue;
+      }
+    }
+  }
+
 }
