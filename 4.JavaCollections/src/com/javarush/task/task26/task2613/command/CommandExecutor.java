@@ -19,7 +19,7 @@ public class CommandExecutor {
   }
 
   private CommandExecutor(){}
-
+  
   public static final void execute(Operation operation){
     CommandExecutor.allKnownCommandsMap.get(operation).execute();
   }

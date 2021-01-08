@@ -31,4 +31,8 @@ public class CurrencyManipulator {
   public int getTotalAmount(){
     return denominations.keySet().stream().mapToInt(key -> denominations.get(key) * key).sum();
   }
+
+  public boolean hasMoney(){
+    return denominations.size()>0;
+  }
 }
