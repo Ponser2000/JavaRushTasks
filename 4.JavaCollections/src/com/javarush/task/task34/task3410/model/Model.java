@@ -25,7 +25,7 @@ public class Model {
   public void setEventListener(EventListener eventListener){
     this.eventListener = eventListener;
   }
-
+  
 
   public void restart() {
     restartLevel(currentLevel);
