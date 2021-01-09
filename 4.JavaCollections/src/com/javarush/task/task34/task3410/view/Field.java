@@ -1,5 +1,6 @@
 package com.javarush.task.task34.task3410.view;
 
+import com.javarush.task.task34.task3410.controller.EventListener;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
@@ -8,7 +9,8 @@ import javax.swing.JPanel;
  * @project JavaRushTasks/com.javarush.task.task34.task3410.view
  */
 public class Field extends JPanel {
-  View view;
+  private View view;
+  private EventListener eventListener;
 
   public Field(View view){
     this.view = view;
@@ -18,4 +20,7 @@ public class Field extends JPanel {
 
   }
 
+  public void setEventListener(EventListener eventListener){
+    this.eventListener = eventListener;
+  }
 }
