@@ -32,5 +32,5 @@ public class Box extends CollisionObject implements Movable{
     graphics.drawLine(xc - width / 2, yc - height / 2, xc + width / 2, yc + height / 2);
     graphics.drawLine(xc - width / 2, yc + height / 2, xc + width / 2, yc - height / 2);
   }
-
+  
 }
