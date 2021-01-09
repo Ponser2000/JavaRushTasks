@@ -12,7 +12,7 @@ public class Wall extends CollisionObject{
   public Wall(int x, int y) {
     super(x, y);
   }
-
+  
   @Override
   public void draw(Graphics graphics) {
     graphics.setColor(new Color(210, 105, 30));
