@@ -57,5 +57,5 @@ public class Field extends JPanel {
       }
     }
   }
-
+  
 }
