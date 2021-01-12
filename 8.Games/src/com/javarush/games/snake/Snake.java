@@ -44,4 +44,31 @@ public class Snake {
   public void move(){
 
   }
+
+  public GameObject createNewHead(){
+    int x = snakeParts.get(0).x;
+    int y = snakeParts.get(0).y;
+
+    switch (direction) {
+      case LEFT :
+        x--;
+        break;
+      case RIGHT:
+        x++;
+        break;
+      case UP :
+        y--;
+        break;
+      case DOWN:
+        y++;
+        break;
+    }
+    GameObject newHead = new GameObject(x,y);
+    return  newHead;
+  }
+
+  public void removeTail(){
+    snakeParts.remove(snakeParts.size()-1);
+  }
+
 }
