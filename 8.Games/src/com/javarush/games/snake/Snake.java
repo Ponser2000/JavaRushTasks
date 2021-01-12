@@ -59,9 +59,9 @@ public class Snake {
     if (checkCollision(newHead)) {
       isAlive = false;
       return;
+    } else {
+      snakeParts.add(0, newHead);
     }
-
-    snakeParts.add(0, newHead);
 
     if (newHead.x == apple.x && newHead.y == apple.y) {
       apple.isAlive = false;
