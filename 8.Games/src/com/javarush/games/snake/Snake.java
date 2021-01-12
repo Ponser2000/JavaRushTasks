@@ -46,7 +46,7 @@ public class Snake {
     }
   }
 
-  public void move(){
+  public void move(Apple apple){
     GameObject newHead = createNewHead();
 
     if (newHead.x < 0 || newHead.x >= SnakeGame.WIDTH ||
@@ -56,7 +56,11 @@ public class Snake {
       return;
     }
     snakeParts.add(0,newHead);
-    removeTail();
+    if (newHead.x == apple.x && newHead.y == apple.y) {
+      apple.isAlive = false;
+    } else {
+      removeTail();
+    }
   }
 
   public GameObject createNewHead(){
