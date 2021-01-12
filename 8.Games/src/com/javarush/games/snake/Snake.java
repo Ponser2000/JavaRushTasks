@@ -27,6 +27,13 @@ public class Snake {
         (direction == Direction.UP && this.direction == Direction.DOWN) ||
         (direction == Direction.DOWN && this.direction == Direction.UP)
     ) return;
+
+    if ((this.direction == Direction.LEFT && snakeParts.get(0).x == snakeParts.get(1).x) ||
+        (this.direction == Direction.RIGHT && snakeParts.get(0).x == snakeParts.get(1).x) ||
+        (this.direction == Direction.UP && snakeParts.get(0).y == snakeParts.get(1).y) ||
+        (this.direction == Direction.DOWN && snakeParts.get(0).y == snakeParts.get(1).y)
+    ) return;
+
     this.direction = direction;
   }
 
