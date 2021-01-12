@@ -41,4 +41,7 @@ public class Snake {
     }
   }
 
+  public void move(){
+
+  }
 }
