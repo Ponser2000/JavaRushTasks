@@ -26,8 +26,6 @@ public class SnakeGame extends Game {
     turnDelay = 300;
     setTurnTimer(turnDelay);
     drawScene();
-    // Apple apple = new Apple(7,7);
-    // apple.draw(this);
   }
 
   private void drawScene(){
@@ -43,6 +41,25 @@ public class SnakeGame extends Game {
   public void onTurn(int step) {
     snake.move();
     drawScene();
+
+  }
+
+  @Override
+  public void onKeyPress(Key key) {
+    switch (key) {
+      case LEFT:
+        snake.setDirection(Direction.LEFT);
+        break;
+      case RIGHT:
+        snake.setDirection(Direction.RIGHT);
+        break;
+      case UP:
+        snake.setDirection(Direction.UP);
+        break;
+      case DOWN:
+        snake.setDirection(Direction.DOWN);
+        break;
+    }
 
   }
 }
