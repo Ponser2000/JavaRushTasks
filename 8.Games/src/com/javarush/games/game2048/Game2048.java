@@ -14,6 +14,7 @@ public class Game2048 extends Game {
 
   private int[][] gameField = new int[SIDE][SIDE];
 
+  private boolean isGameStopped = false;
 
   @Override
   public void initialize() {
@@ -36,6 +37,11 @@ public class Game2048 extends Game {
   }
 
   private void createNewNumber() {
+    if (getMaxTileValue() >= 2048) {
+      win();
+      return;
+    }
+
     boolean isCreated = false;
     do {
       int x = getRandomNumber(SIDE);
@@ -46,6 +52,7 @@ public class Game2048 extends Game {
       }
     }
     while (!isCreated);
+
   }
 
   private Color getColorByValue(int value) {
@@ -120,11 +127,11 @@ public class Game2048 extends Game {
       moveLeft();
     } else if (key == Key.RIGHT) {
       moveRight();
-    }else if (key == Key.UP) {
+    } else if (key == Key.UP) {
       moveUp();
-    }else if (key == Key.DOWN) {
+    } else if (key == Key.DOWN) {
       moveDown();
-    }else {
+    } else {
       return;
     }
     drawScene();
@@ -181,4 +188,20 @@ public class Game2048 extends Game {
     gameField = result;
   }
 
+  private int getMaxTileValue() {
+    int max = gameField[0][0];
+    for (int i = 0; i < SIDE; i++) {
+      for (int j = 0; j < SIDE; j++) {
+        if (gameField[j][i] > max) {
+          max = gameField[j][i];
+        }
+      }
+    }
+    return max;
+  }
+
+  private void win(){
+    showMessageDialog(Color.NONE, "YOU WIN!", Color.WHITE, 50);
+    isGameStopped = true;
+  }
 }
