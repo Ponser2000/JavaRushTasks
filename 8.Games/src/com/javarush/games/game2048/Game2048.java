@@ -147,9 +147,29 @@ public class Game2048 extends Game {
     }
   }
 
-  private void moveRight(){}
-  private void moveUp(){}
-  private void moveDown(){}
+  private void moveUp() {
+    rotateClockwise();
+    rotateClockwise();
+    rotateClockwise();
+    moveLeft();
+    rotateClockwise();
+  }
+
+  private void moveRight() {
+    rotateClockwise();
+    rotateClockwise();
+    moveLeft();
+    rotateClockwise();
+    rotateClockwise();
+  }
+
+  private void moveDown() {
+    rotateClockwise();
+    moveLeft();
+    rotateClockwise();
+    rotateClockwise();
+    rotateClockwise();
+  }
 
   private void rotateClockwise() {
     int[][] result = new int[SIDE][SIDE];
