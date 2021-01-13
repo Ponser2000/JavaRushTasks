@@ -26,13 +26,15 @@ public class Game2048 extends Game {
     createNewNumber();
   }
 
-  private void drawScene(){
-    for (int i = 0; i < SIDE; i++)
-      for(int j=0; j < SIDE; j++)
+  private void drawScene() {
+    for (int i = 0; i < SIDE; i++) {
+      for (int j = 0; j < SIDE; j++) {
         setCellColoredNumber(i, j, gameField[j][i]);
+      }
+    }
   }
 
-  private void createNewNumber(){
+  private void createNewNumber() {
     boolean isCreated = false;
     do {
       int x = getRandomNumber(SIDE);
@@ -45,7 +47,7 @@ public class Game2048 extends Game {
     while (!isCreated);
   }
 
-  private Color getColorByValue(int value){
+  private Color getColorByValue(int value) {
     switch (value) {
       case 0:
         return Color.WHITE;
@@ -76,14 +78,14 @@ public class Game2048 extends Game {
     }
   }
 
-  private void setCellColoredNumber(int x, int y, int value){
+  private void setCellColoredNumber(int x, int y, int value) {
     Color color = getColorByValue(value);
     String msg = value > 0 ? String.valueOf(value) : "";
     setCellValueEx(x, y, color, msg);
 
   }
 
-  private boolean compressRow(int[] row){
+  private boolean compressRow(int[] row) {
     int insertPosition = 0;
     boolean result = false;
     for (int x = 0; x < SIDE; x++) {
@@ -94,6 +96,18 @@ public class Game2048 extends Game {
           result = true;
         }
         insertPosition++;
+      }
+    }
+    return result;
+  }
+
+  private boolean mergeRow(int[] row) {
+    boolean result = false;
+    for (int i = 0; i < row.length - 1; i++) {
+      if (row[i] != 0 && row[i] == row[i + 1]) {
+        row[i] += row[i + 1];
+        row[i + 1] = 0;
+        result = true;
       }
     }
     return result;
