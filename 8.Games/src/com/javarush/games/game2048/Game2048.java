@@ -2,6 +2,7 @@ package com.javarush.games.game2048;
 
 import com.javarush.engine.cell.Color;
 import com.javarush.engine.cell.Game;
+import com.javarush.engine.cell.Key;
 
 /**
  * @author Sergey Ponomarev on 13.01.2021
@@ -112,4 +113,22 @@ public class Game2048 extends Game {
     }
     return result;
   }
+
+  @Override
+  public void onKeyPress(Key key) {
+    if (key == Key.LEFT) {
+        moveLeft();
+    } else if (key == Key.RIGHT) {
+        moveRight();
+    }else if (key == Key.UP) {
+      moveUp();
+    }else if (key == Key.DOWN) {
+      moveDown();
+    }
+  }
+  private void moveLeft(){}
+  private void moveRight(){}
+  private void moveUp(){}
+  private void moveDown(){}
+
 }
