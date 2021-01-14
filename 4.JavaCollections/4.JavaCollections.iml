@@ -4,26 +4,26 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task20" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task20/task2028" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task22" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task22/task2213" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task25" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task25/task2515" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task26" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task26/task2613" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task28" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task28/task2810" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task31" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task32" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task33" />
+      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task34" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task35" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task36" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task37" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task38" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task20/task2028" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task22/task2213" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task25/task2515" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task20" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task22" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task25" />
       <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task39" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task26/task2613" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task28/task2810" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task26" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task28" />
-      <excludeFolder url="file://$MODULE_DIR$/src/com/javarush/task/task34" />
-      <excludeFolder url="file://$MODULE_DIR$" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
