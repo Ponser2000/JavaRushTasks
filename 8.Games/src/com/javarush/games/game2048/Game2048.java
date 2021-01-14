@@ -123,6 +123,10 @@ public class Game2048 extends Game {
 
   @Override
   public void onKeyPress(Key key) {
+    if (!canUserMove()) {
+      gameOver();
+      return;
+    }
     if (key == Key.LEFT) {
       moveLeft();
     } else if (key == Key.RIGHT) {
@@ -202,6 +206,11 @@ public class Game2048 extends Game {
 
   private void win(){
     showMessageDialog(Color.NONE, "YOU WIN!", Color.WHITE, 50);
+    isGameStopped = true;
+  }
+
+  private void gameOver(){
+    showMessageDialog(Color.NONE, "YOU LOOSE!!!", Color.WHITE, 50);
     isGameStopped = true;
   }
 
