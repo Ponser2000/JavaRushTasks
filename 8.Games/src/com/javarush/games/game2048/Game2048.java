@@ -24,6 +24,7 @@ public class Game2048 extends Game {
   }
 
   private void createGame() {
+    gameField = new int[SIDE][SIDE];
     createNewNumber();
     createNewNumber();
   }
@@ -123,18 +124,29 @@ public class Game2048 extends Game {
 
   @Override
   public void onKeyPress(Key key) {
+    if (isGameStopped) {
+      if (key == Key.SPACE) {
+        isGameStopped = false;
+        createGame();
+        drawScene();
+      } else {
+        return;
+      }
+    }
+
     if (!canUserMove()) {
       gameOver();
       return;
     }
-    if (key == Key.LEFT) {
-      moveLeft();
+
+    if (key == Key.UP) {
+      moveUp();
     } else if (key == Key.RIGHT) {
       moveRight();
-    } else if (key == Key.UP) {
-      moveUp();
     } else if (key == Key.DOWN) {
       moveDown();
+    } else if (key == Key.LEFT) {
+      moveLeft();
     } else {
       return;
     }
