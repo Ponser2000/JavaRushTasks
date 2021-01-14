@@ -16,6 +16,8 @@ public class Game2048 extends Game {
 
   private boolean isGameStopped = false;
 
+  private int score = 0;
+
   @Override
   public void initialize() {
     setScreenSize(SIDE, SIDE);
@@ -117,6 +119,8 @@ public class Game2048 extends Game {
         row[i] += row[i + 1];
         row[i + 1] = 0;
         result = true;
+        score += row[i];
+        setScore(score);
       }
     }
     return result;
@@ -127,6 +131,8 @@ public class Game2048 extends Game {
     if (isGameStopped) {
       if (key == Key.SPACE) {
         isGameStopped = false;
+        score = 0;
+        setScore(score);
         createGame();
         drawScene();
       } else {
