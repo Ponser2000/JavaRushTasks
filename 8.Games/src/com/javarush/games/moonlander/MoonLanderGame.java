@@ -14,6 +14,10 @@ public class MoonLanderGame extends Game {
 
   private GameObject landscape;
 
+  private boolean isUpPressed;
+  private boolean isLeftPressed;
+  private boolean isRightPressed;
+
 
   @Override
   public void initialize() {
@@ -23,6 +27,9 @@ public class MoonLanderGame extends Game {
   }
 
   private void createGame(){
+    isLeftPressed = false;
+    isRightPressed = false;
+    isUpPressed = false;
     createGameObjects();
     setTurnTimer(50);
     drawScene();
