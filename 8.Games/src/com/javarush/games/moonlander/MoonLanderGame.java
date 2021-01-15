@@ -12,14 +12,18 @@ public class MoonLanderGame extends Game {
 
   private Rocket rocket;
 
+  private GameObject landscape;
+
+
   @Override
   public void initialize() {
     setScreenSize(WIDTH, HEIGHT);
     createGame();
+    showGrid(false);
   }
 
   private void createGame(){
-    rocket = new Rocket(WIDTH/2,0);
+    createGameObjects();
     drawScene();
   }
 
@@ -28,8 +32,13 @@ public class MoonLanderGame extends Game {
     for (int x =0; x < WIDTH; x++)
       for (int y =0; y < WIDTH; y++)
         setCellColor(x, y, Color.BLACK);
-
+    landscape.draw(this);
     rocket.draw(this);
+  }
+
+  private void createGameObjects(){
+    rocket = new Rocket(WIDTH/2,0);
+    landscape = new GameObject(0,25,ShapeMatrix.LANDSCAPE);
   }
 
 }
