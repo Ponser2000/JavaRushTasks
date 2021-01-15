@@ -10,6 +10,8 @@ public class MoonLanderGame extends Game {
   public static final int WIDTH = 64;
   public static final int HEIGHT = 64;
 
+  private Rocket rocket;
+
   @Override
   public void initialize() {
     setScreenSize(WIDTH, HEIGHT);
@@ -17,6 +19,7 @@ public class MoonLanderGame extends Game {
   }
 
   private void createGame(){
+    rocket = new Rocket(WIDTH/2,0);
     drawScene();
   }
 
@@ -25,6 +28,8 @@ public class MoonLanderGame extends Game {
     for (int x =0; x < WIDTH; x++)
       for (int y =0; y < WIDTH; y++)
         setCellColor(x, y, Color.BLACK);
+
+    rocket.draw(this);
   }
 
 }
