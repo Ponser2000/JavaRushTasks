@@ -10,6 +10,8 @@ public class Rocket extends GameObject {
   private double speedX = 0;
 
   private double boost = 0.05;
+  private double slowdown =  boost / 10;
+
 
   public Rocket(double x, double y) {
     super(x, y, ShapeMatrix.ROCKET);
@@ -19,21 +21,33 @@ public class Rocket extends GameObject {
 
     if (isUpPressed) {
       speedY -= boost;
-      y += speedY;
     } else {
       speedY += boost;
-      y += speedY;
     }
+
+    y += speedY;
 
     if (isLeftPressed) {
       speedX -= boost;
-      x += speedX;
     }
 
     if (isRightPressed) {
       speedX += boost;
-      x += speedX;
     }
+
+    if (!isLeftPressed && !isRightPressed && speedX <= slowdown && speedX >= -slowdown) {
+      speedX = 0;
+    }
+
+    if (!isLeftPressed && !isRightPressed && speedX > slowdown) {
+      speedX -= slowdown;
+    }
+
+    if (!isLeftPressed && !isRightPressed && speedX < -slowdown) {
+      speedX += slowdown;
+    }
+
+    x += speedX;
 
     checkBorders();
   }
