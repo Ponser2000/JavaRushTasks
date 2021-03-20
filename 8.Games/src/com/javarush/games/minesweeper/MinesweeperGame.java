@@ -25,8 +25,8 @@ public class MinesweeperGame extends Game {
     @Override
     public void initialize() {
         setScreenSize(SIDE, SIDE);
+        showGrid(false);
         createGame();
-
     }
 
     private void createGame() {
