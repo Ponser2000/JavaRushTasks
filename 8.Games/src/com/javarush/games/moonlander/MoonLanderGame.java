@@ -76,6 +76,8 @@ public class MoonLanderGame extends Game {
     } else if (key == Key.RIGHT) {
       isRightPressed = true;
       isLeftPressed = false;
+    } else if (key == Key.SPACE && isGameStopped) {
+      createGame();
     }
   }
 
@@ -105,6 +107,11 @@ public class MoonLanderGame extends Game {
     showMessageDialog(Color.BLUE, "You win!!!", Color.YELLOW, 24);
     stopTurnTimer();
   }
-  private void gameOver(){}
+  private void gameOver(){
+    rocket.crash();
+    isGameStopped = true;
+    showMessageDialog(Color.GREEN, "You looser!!!", Color.RED, 24);
+    stopTurnTimer();
+  }
 
 }
