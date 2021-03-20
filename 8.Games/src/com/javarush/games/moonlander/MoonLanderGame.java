@@ -7,7 +7,6 @@ import com.javarush.engine.cell.*;
  * @project JavaRushTasks/com.javarush.games.moonlander
  */
 public class MoonLanderGame extends Game {
-
   public static final int WIDTH = 64;
   public static final int HEIGHT = 64;
 
@@ -29,7 +28,7 @@ public class MoonLanderGame extends Game {
     showGrid(false);
   }
 
-  private void createGame() {
+  private void createGame(){
     isLeftPressed = false;
     isRightPressed = false;
     isUpPressed = false;
@@ -40,34 +39,31 @@ public class MoonLanderGame extends Game {
   }
 
 
-  private void drawScene() {
-    for (int x = 0; x < WIDTH; x++) {
-      for (int y = 0; y < WIDTH; y++) {
+  private void drawScene(){
+    for (int x =0; x < WIDTH; x++)
+      for (int y =0; y < WIDTH; y++)
         setCellColor(x, y, Color.BLACK);
-      }
-    }
     landscape.draw(this);
     rocket.draw(this);
   }
 
-  private void createGameObjects() {
-    rocket = new Rocket(WIDTH / 2, 0);
-    landscape = new GameObject(0, 25, ShapeMatrix.LANDSCAPE);
-    platform = new GameObject(23, MoonLanderGame.HEIGHT - 1, ShapeMatrix.PLATFORM);
+  private void createGameObjects(){
+    rocket = new Rocket(WIDTH/2,0);
+    landscape = new GameObject(0,25,ShapeMatrix.LANDSCAPE);
+    platform = new GameObject(23,MoonLanderGame.HEIGHT - 1, ShapeMatrix.PLATFORM);
   }
 
   @Override
   public void onTurn(int step) {
-    rocket.move(isUpPressed, isLeftPressed, isRightPressed);
+    rocket.move(isUpPressed,isLeftPressed,isRightPressed);
     check();
     drawScene();
   }
 
   @Override
   public void setCellColor(int x, int y, Color color) {
-    if (0 <= x && x < WIDTH && 0 <= y && y < HEIGHT) {
+    if ( 0<= x && x < WIDTH && 0<= y && y< HEIGHT)
       super.setCellColor(x, y, color);
-    }
   }
 
   @Override
@@ -96,7 +92,7 @@ public class MoonLanderGame extends Game {
     }
   }
 
-  private void check() {
+  private void check(){
     if (rocket.isCollision(landscape) && !(rocket.isCollision(platform) && rocket.isStopped())) {
       gameOver();
     }
@@ -105,14 +101,13 @@ public class MoonLanderGame extends Game {
     }
   }
 
-  private void win() {
+  private void win(){
     rocket.land();
     isGameStopped = true;
     showMessageDialog(Color.BLUE, "You win!!!", Color.YELLOW, 24);
     stopTurnTimer();
   }
-
-  private void gameOver() {
+  private void gameOver(){
     rocket.crash();
     isGameStopped = true;
     showMessageDialog(Color.GREEN, "You looser!!!", Color.RED, 24);
