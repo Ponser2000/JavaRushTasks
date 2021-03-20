@@ -6,13 +6,13 @@ import java.util.List;
  * @author Sergey Ponomarev on 20.03.2021
  * @project JavaRushTasks/com.javarush.games.moonlander
  */
-public class RocketFire extends GameObject{
+public class RocketFire extends GameObject {
 
   private List<int[][]> frames;
   private int frameIndex;
   private boolean isVisible;
 
-  public RocketFire( List<int[][]> frameList) {
+  public RocketFire(List<int[][]> frameList) {
     super(0, 0, frameList.get(0));
     this.frames = frameList;
     frameIndex = 0;
