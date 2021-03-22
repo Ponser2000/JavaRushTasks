@@ -25,10 +25,30 @@ public class RacerGame extends Game {
   private void createGame(){
     drawScene();
   }
-
+  
   private void drawScene(){
     drawField();
   }
 
-  private void drawField(){}
+  private void drawField(){
+    for(int i=0; i<ROADSIDE_WIDTH; i++){
+      for(int j=0; j< HEIGHT;j++) {
+        setCellColor(i,j,Color.GREEN);
+        setCellColor(WIDTH - i - 1 ,j,Color.GREEN);
+      }
+    }
+
+    for(int i=ROADSIDE_WIDTH; i<CENTER_X; i++){
+      for(int j=0; j< HEIGHT;j++) {
+        setCellColor(i,j,Color.GRAY);
+        setCellColor(WIDTH - i - 1 ,j,Color.GRAY);
+      }
+    }
+
+    for(int j=0; j< HEIGHT;j++) {
+      setCellColor(CENTER_X,j,Color.WHITE);
+    }
+  }
+
+
 }
