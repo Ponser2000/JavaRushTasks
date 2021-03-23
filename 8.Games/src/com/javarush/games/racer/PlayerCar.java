@@ -1,6 +1,8 @@
 package com.javarush.games.racer;
 
 
+import com.javarush.games.racer.road.RoadManager;
+
 /**
  * @author Sergey Ponomarev on 22.03.2021
  * @project JavaRushTasks/com.javarush.games.racer
@@ -28,10 +30,13 @@ public class PlayerCar extends GameObject {
 
   public void move() {
 
-    if (direction == Direction.RIGHT)
-      x++;
-    if (direction == Direction.LEFT)
-      x--;
+    if (direction == Direction.RIGHT) x++;
 
+    if (direction == Direction.LEFT) x--;
+
+    if (x > RoadManager.RIGHT_BORDER - width)
+      x = RoadManager.RIGHT_BORDER - width;
+    if(x < RoadManager.LEFT_BORDER)
+      x = RoadManager.LEFT_BORDER;
   }
 }
