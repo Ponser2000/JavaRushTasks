@@ -1,12 +1,14 @@
 package com.javarush.games.racer;
 
-import com.javarush.engine.cell.*;
+import com.javarush.engine.cell.Color;
+import com.javarush.engine.cell.Game;
 
 /**
  * @author Sergey Ponomarev on 22.03.2021
  * @project JavaRushTasks/com.javarush.games.racer
  */
 public class GameObject {
+
   public int x;
   public int y;
 
@@ -23,10 +25,10 @@ public class GameObject {
     this.height = matrix.length;
   }
 
-  public  void draw(Game game){
-    for(int i=0; i<width; i++) {
-      for(int j=0; j<height; j++) {
-        game.setCellColor(this.x + i,this.y + j,Color.values()[matrix[j][i]]);
+  public void draw(Game game) {
+    for (int i = 0; i < width; i++) {
+      for (int j = 0; j < height; j++) {
+        game.setCellColor(this.x + i, this.y + j, Color.values()[matrix[j][i]]);
       }
     }
   }
