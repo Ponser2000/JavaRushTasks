@@ -26,7 +26,7 @@ public class RoadManager {
     if (type == RoadObjectType.THORN )
       return new Thorn(x,y);
     else
-      return null;
+      return new Car(type,x,y);
   }
 
   private void addRoadObject(RoadObjectType type, Game game){
@@ -67,6 +67,7 @@ public class RoadManager {
 
   public void generateNewRoadObjects(Game game){
     generateThorn(game);
+    generateRegularCar(game);
   }
 
   private void deletePassedItems(){
@@ -80,5 +81,13 @@ public class RoadManager {
       }
     }
     return false;
+  }
+
+  private void generateRegularCar(Game game){
+    int res = game.getRandomNumber(100);
+    int carTypeNumber = game.getRandomNumber(4);
+    if (res < 30) {
+      addRoadObject(RoadObjectType.values()[carTypeNumber], game);
+    }
   }
 }
