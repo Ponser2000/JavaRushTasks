@@ -2,6 +2,7 @@ package com.javarush.games.racer.road;
 
 import com.javarush.games.racer.GameObject;
 import com.javarush.games.racer.ShapeMatrix;
+import java.util.List;
 
 public class RoadObject extends GameObject {
     public RoadObjectType type;
@@ -21,6 +22,10 @@ public class RoadObject extends GameObject {
      */
     public void move(int boost) {
         this.y += boost;
+    }
+
+    public void move(int speed, List<RoadObject> roadObjectList){
+
     }
 
     /**
