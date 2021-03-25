@@ -23,6 +23,11 @@ public class RoadManager {
 
   private List<RoadObject> items = new ArrayList<>();
 
+  private int passedCarsCount = 0;
+
+  public int getPassedCarsCount() {
+    return passedCarsCount;
+  }
 
   private RoadObject createRoadObject(RoadObjectType type, int x, int y){
     if (type == RoadObjectType.THORN )
@@ -76,7 +81,15 @@ public class RoadManager {
   }
 
   private void deletePassedItems(){
-    items.removeIf(item -> item.y >= RacerGame.HEIGHT);
+    items.removeIf(item -> {
+      if (item.y >= RacerGame.HEIGHT) {
+        if (item.type != RoadObjectType.THORN)
+          passedCarsCount++;
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
   public boolean checkCrush(PlayerCar playerCar){
